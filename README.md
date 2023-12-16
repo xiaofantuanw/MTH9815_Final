@@ -4,6 +4,7 @@ Final Project: A Trading System
 
 ## Notes
 This program can be compiled in the latest gcc compiler with latest boost 1.84.0. The large dataset requires a long time to generate and run. For testing, please modify DataGeneration.cpp to make a smaller dataset. All running results are uploaded with the complete dataset.
+The complete data set results are uploaded to OneDrive and the partial data set (with 1000 prices) and results are uploaded here.
 
 ## Basic Requirements
 Develop a bond trading system for US Treasuries with seven securities: 2Y, 3Y, 5Y, 7Y, 10Y, 20Y, and 30Y. Look up the CUSIPS, coupons, and maturity dates for each security. Ticker is T.
