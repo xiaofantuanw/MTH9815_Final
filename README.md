@@ -2,6 +2,10 @@
 Tengxiao Fan's MTH9815 Final Project
 Final Project: A Trading System
 
+## Notes
+This program can be compiled in the latest gcc compiler with latest boost 1.84.0. The large dataset requires a long time to generate and run. For testing, please modify DataGeneration.cpp to make a smaller dataset. All running results are uploaded with the complete dataset.
+
+## Basic Requirements
 Develop a bond trading system for US Treasuries with seven securities: 2Y, 3Y, 5Y, 7Y, 10Y, 20Y, and 30Y. Look up the CUSIPS, coupons, and maturity dates for each security. Ticker is T.
 
 We have a new definition of a Service in soa.hpp, with the concept of a ServiceListener and Connector also defined. A ServiceListener is a listener to events on the service where data is added to the service, updated on the service, or removed from the service. A Connector is a class that flows data into the Service from some connectivity source (e.g. a socket, file, etc) via the Service.OnMessage() method. The Publish() method on the Connector publishes data to the connectivity source and can be invoked from a Service. Some Connectors are publish-only that do not invoke Service.OnMessage(). Some Connectors are subscribe-only where Publish() does nothing. Other Connectors can do both publish and subscribe.
@@ -23,8 +27,6 @@ BondHistoricalDataService
 The following services below should read data from a file in a separate process and publish the data via socket into the trading system – you should create sample data as outlined below. You should read data from the file via a Connector subclass and publish via socket in another Connector. There should then be an inbound Connector in the trading system to read from the socket, which should then flow data into the relevant Service via the Service.OnMessage() method.
 
 Note that you should use fractional notation for US Treasuries prices when reading from the file and writing back to a file in the BondHistoricalDataService (with the smallest tick being 1/256th). Example of fractional is 100-xyz, with xy being from 0 to 31 and z being from 0 to 7 (you can replace z=4 with +). The xy number gives the decimal out of 32 and the z number gives the remainder out of 256. So 100-001 is 100.00390625 in decimal and 100-25+ is 100.796875 in decimal.
-
-Note that output files should have timestamps on each line with millisecond precision.
 
 ## BondPricingService
 This should get data from prices.txt (again, with a separate process reading from the file and publishing via socket into the trading system, which populates via a Connector into the BondPricingService). Create 1,000,000 prices for each security (so a total of 7,000,000 prices across all 7 securities). The file should create prices which oscillate between 99 and 101, moving by the smallest increment each time up from 99 and then down from 101 (bearing in mind that US Treasuries trade in 1/256th increments). The bid/offer spread should oscillate between 1/128 and 1/64.
@@ -63,4 +65,9 @@ You should read inquiries from a file called inquiries.txt with attributes for e
 
 ## BondHistoricalDataService
 This service should register a ServiceListener on the following: BondPositionService, BondRiskService, BondExecutionService, BondStreamingService, and BondInquiryService. It should persist objects it receives from these services back into files positions.txt, risk.txt, executions.txt, streaming.txt, and allinquiries.txt via special Connectors for each type with a Publish() method on each Connector. There should be a BondHistoricalDataService corresponding to each data type. When persisting positions, we should persist each position for a given book as well as the aggregate position. When persisting risk, we should persist risk for each security as well as for the following bucket sectors: FrontEnd (2Y, 3Y), Belly (5Y, 7Y, 10Y), and LongEnd (20Y, 30Y). Use realistic PV01 values for each security.
+
+## txt File Formats
+This section gives the formats of my txt files:
+### input
+#### prices.txt
 
