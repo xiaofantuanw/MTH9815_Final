@@ -1,6 +1,5 @@
 # MTH9815_Final
 Tengxiao Fan's MTH9815 Final Project
-Final Project: A Trading System
 
 ## Notes
 This program can be compiled in the latest gcc compiler with latest boost 1.84.0. The large dataset requires a long time to generate and run. For testing, please modify DataGeneration.cpp to make a smaller dataset. All running results are uploaded with the complete dataset.
